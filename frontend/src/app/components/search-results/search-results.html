@@ -1,0 +1,83 @@
+<div class="container py-4">
+ <!-- search-header logic -->
+<div class="search-header d-flex align-items-center p-3 mb-4 bg-white shadow-sm border rounded-3">
+  
+  <!-- 1. Back Arrow Button -->
+  <button class="btn btn-link text-dark p-0 me-3 border-0" (click)="goBack()">
+    <i class="bi bi-arrow-left fs-4"></i>
+  </button>
+
+  <div class="flex-grow-1">
+    <h5 class="mb-0 fw-bold">
+      {{fromCity | titlecase}} <i class="bi bi-arrow-right mx-2 text-muted"></i> {{toCity | titlecase}}
+    </h5>
+    <p class="text-muted small mb-0">{{ travelDate }} | {{ trips.length }} Buses Found</p>
+  </div>
+
+  <!-- Modify Search Button -->
+  <button class="btn btn-outline-danger btn-sm fw-bold" routerLink="/">Modify Search</button>
+</div>
+  <div class="row">
+    <div class="col-12">
+      <div *ngIf="loading" class="text-center my-5">
+        <div class="spinner-border text-danger" role="status"></div>
+        <p class="mt-2 text-muted">Searching for buses...</p>
+      </div>
+
+      <div *ngIf="!loading && trips.length > 0">
+        <div *ngFor="let trip of trips" class="bus-card mb-3 bg-white shadow-sm rounded-3 border overflow-hidden">
+          <div class="row g-0 align-items-center">
+            
+            <div class="col-md-3 p-4">
+              <h5 class="fw-bold text-dark mb-1">{{ trip.bus?.busName }}</h5>
+              <p class="text-muted small mb-2">{{ trip.bus?.busType }} {{ trip.bus?.seatType }}</p>
+              <div class="d-flex align-items-center">
+                <span class="badge bg-success d-flex align-items-center gap-1">
+                  <i class="bi bi-star-fill small"></i> 4.2
+                </span>
+                <span class="text-muted small ms-2">420 Ratings</span>
+              </div>
+            </div>
+
+            <div class="col-md-6 p-4 border-start border-end">
+              <div class="d-flex justify-content-between align-items-center text-center">
+                <div class="time-block">
+                  <h4 class="fw-bold mb-0">{{ formatTimeTo12Hour(trip.departureTime) }}</h4>
+                  <p class="text-muted small mb-0">{{ fromCity | titlecase }}</p>
+                </div>
+
+                <div class="duration-block flex-grow-1 px-3">
+                  <small class="text-muted d-block mb-1">04h 00m</small>
+                  <div class="journey-line"></div>
+                </div>
+
+                <div class="time-block">
+                  <h4 class="fw-bold mb-0">{{ formatTimeTo12Hour(trip.arrivalTime) }}</h4>
+                  <p class="text-muted small mb-0">{{ toCity | titlecase }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-3 p-4 text-center bg-light-end">
+              <div class="price-container mb-3">
+                <small class="text-muted d-block">Starts from</small>
+                <h3 class="fw-bold text-dark mb-0">₹{{ trip.basePrice }}</h3>
+              </div>
+              <p class="text-success small mb-3 fw-bold">{{ trip.bus?.totalSeats }} Seats Left</p>
+              <button class="btn btn-danger w-100 fw-bold py-2 shadow-sm" (click)="goToSeats(trip.bus?.busId)">
+                SELECT SEATS
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!loading && trips.length === 0" class="text-center p-5 bg-white rounded border shadow-sm">
+        <i class="bi bi-bus-front-fill fs-1 text-muted mb-3"></i>
+        <h5>No buses found for this route.</h5>
+        <p class="text-muted">Please try searching for a different date or city.</p>
+      </div>
+    </div>
+  </div>
+</div>

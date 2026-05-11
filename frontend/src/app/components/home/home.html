@@ -1,0 +1,113 @@
+<div class="main-wrapper">
+
+  <header class="home-header">
+    <div class="brand">
+      <i class="bi bi-bus-front-fill bus-icon"></i>
+      <span class="brand-text">BusBook</span>
+    </div>
+    <div class="user-menu">
+      <span class="user-info">
+        <i class="bi bi-person-circle"></i> {{ userName }} </span>
+      <button class="logout-btn" (click)="onLogout()">
+        <i class="bi bi-box-arrow-right"></i> Logout
+      </button>
+    </div>
+  </header>
+
+  <section class="hero-section text-center">
+    <h1 class="main-title">Book Your Bus Journey</h1>
+    <p class="sub-title">Safe, comfortable, and affordable travel</p>
+  </section>
+
+  <div class="search-container">
+    <div class="search-card shadow">
+      <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+
+        <div class="form-row">
+          <div class="form-group col">
+            <label class="custom-label">From</label>
+            <div class="custom-input-group">
+              <span class="input-icon"><i class="bi bi-geo-alt"></i></span>
+              <input type="text" class="custom-input" formControlName="fromCity" placeholder="Source city">
+            </div>
+          </div>
+
+          <div class="form-group col">
+            <label class="custom-label">To</label>
+            <div class="custom-input-group">
+              <span class="input-icon"><i class="bi bi-geo-alt"></i></span>
+              <input type="text" class="custom-input" formControlName="toCity" placeholder="Destination city">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col">
+            <label class="custom-label">Date of Journey</label>
+            <div class="custom-input-group">
+              <span class="input-icon"><i class="bi bi-calendar3"></i></span>
+              <input type="date" class="custom-input" formControlName="travelDate">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row mt-4">
+          <div class="col">
+            <button type="submit" class="btn search-btn w-100">
+              <i class="bi bi-search"></i> Search Buses
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+
+
+<section class="container my-5 pt-5">
+  <h2 class="text-center fw-bold mb-4">Popular Destinations</h2>
+  <div class="row g-4">
+    <div class="col-md-4" *ngFor="let dest of popularDestinations" >
+      <div class="card destination-card border-0 shadow rounded-4 overflow-hidden">
+        <img [src]="dest.image"
+             class="card-img-top"
+             [alt]="dest.name"
+             style="height: 200px; object-fit: cover;"
+             onerror="this.src='https://via.placeholder.com/400x250?text=BusBook+Destination'">
+        <div class="card-body">
+          <h5 class="card-title fw-bold">{{ dest.name }}</h5>
+          <p class="text-muted">Starts from ₹{{ dest.price }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-light py-5">
+  <div class="container text-center">
+    <h2 class="fw-bold mb-5">Why Choose Us?</h2>
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <i class="bi bi-shield-check fa-3x text-primary mb-3"></i>
+        <h4 class="fw-bold">Safe & Secure</h4>
+        <p class="text-muted">Verified buses and secure payment options for a worry-free travel.</p>
+      </div>
+      <div class="col-md-4 mb-4">
+        <i class="bi bi-headset fa-3x text-primary mb-3"></i>
+        <h4 class="fw-bold">24/7 Support</h4>
+        <p class="text-muted">Our dedicated team is always here to help you at any time.</p>
+      </div>
+      <div class="col-md-4 mb-4">
+        <i class="bi bi-tags fa-3x text-primary mb-3"></i>
+        <h4 class="fw-bold">Best Prices</h4>
+        <p class="text-muted">Get the most affordable bus tickets with zero hidden charges.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+
+

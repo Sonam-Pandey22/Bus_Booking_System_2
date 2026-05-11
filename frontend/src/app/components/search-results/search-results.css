@@ -1,0 +1,101 @@
+/* Container & Global Styles */
+.container { 
+    padding: 20px; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+}
+
+/* Top Header Section */
+.search-header {
+    border-left: 5px solid #d84e55 !important;
+    background-color: #fff;
+}
+
+/* Bus Card Styling */
+.bus-card {
+    transition: all 0.2s ease-in-out;
+    cursor: default;
+    border: 1px solid #ddd !important;
+    background: #fff;
+}
+
+.bus-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1) !important;
+}
+
+/* Left Section: Bus Info */
+.bus-card h5 {
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.badge.bg-success {
+    background-color: #38b87c !important; /* Standard Green Rating */
+    font-weight: 500;
+}
+
+/* Middle Section: Time & Journey Line */
+.time-block h4 {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.duration-block {
+    text-align: center;
+    color: #777;
+}
+
+/* The Horizontal Line between times */
+.journey-line {
+    height: 2px;
+    background: #e0e0e0;
+    position: relative;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.journey-line::before, .journey-line::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid #e0e0e0;
+    background: white;
+}
+
+.journey-line::before { left: 0; } /* Starting point */
+.journey-line::after { right: 0; background: #999; } /* Destination point */
+
+/* Right Section: Price & Button */
+.bg-light-end {
+    background-color: #fcfcfc;
+    border-left: 1px dashed #ddd; /* Dotted line effect */
+}
+
+.price-container h3 {
+    color: #d84e55; /* Highlight price in Red-ish tone */
+}
+
+.btn-danger {
+    background-color: #d84e55 !important;
+    border: none;
+    font-weight: bold;
+    padding: 12px;
+    transition: 0.3s;
+}
+
+.btn-danger:hover {
+    background-color: #bf3d43 !important;
+    box-shadow: 0 4px 10px rgba(216, 78, 85, 0.3);
+}
+
+/* Utility Classes */
+.text-muted {
+    color: #777 !important;
+}
+
+.x-small { 
+    font-size: 0.75rem; 
+}

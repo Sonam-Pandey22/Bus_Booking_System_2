@@ -1,0 +1,39 @@
+/* You can add global styles to this file, and also import other style files */
+/* Background styling */
+.login-container {
+  background-color: #f0f5ff; /* Light blue background */
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Card width and shape */
+.login-card {
+  width: 100%;
+  max-width: 450px;
+  border: none;
+}
+
+/* Custom Bus Icon Circle */
+.bus-icon-circle {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Match the blue button from your image */
+.btn-primary {
+  background-color: #1a56ff !important;
+  border: none;
+}
+
+/* Input group look */
+.input-group-text {
+  color: #adb5bd;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border-color: #1a56ff;
+}

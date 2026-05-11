@@ -1,0 +1,80 @@
+<div class="container py-5 bg-light min-vh-100">
+  
+  <!-- Header Info: Left Aligned -->
+  <!-- Header Info: Left Aligned with Back Arrow -->
+<div class="text-start mb-5 px-3 d-flex align-items-center">
+  
+  <!-- 1. Back Arrow Icon -->
+  <button class="btn btn-link text-dark p-0 me-3 border-0" (click)="goBack()">
+    <i class="bi bi-arrow-left fs-2"></i>
+  </button>
+
+  <div>
+    <h3 class="fw-bold m-0 text-dark">Select Your Seats</h3>
+    <p class="text-muted mt-1 fw-medium mb-0">
+      <i class="bi bi-geo-alt-fill text-danger"></i> {{ fromCity }} 
+      <i class="bi bi-arrow-right mx-2"></i> 
+      {{ toCity }}
+    </p>
+  </div>
+</div>
+
+  <div class="row justify-content-center gap-4 px-2">
+    
+    <!-- Lower Deck -->
+    <div class="col-md-5 bg-white shadow-sm p-4 rounded-4 border">
+      <div class="d-flex justify-content-between mb-4 border-bottom pb-2">
+        <span class="fw-bold text-secondary">LOWER DECK</span>
+        <i class="bi bi-gear-wide-connected text-secondary opacity-25 fs-3"></i>
+      </div>
+
+      <div class="lower-deck-grid">
+        <!-- Database se aane wali saari seats yahan loop hongi -->
+        <div *ngFor="let seat of lowerDeck" 
+             class="seat-item"
+             [ngClass]="{'selected': isSelected(seat)}"
+             (click)="selectSeat(seat)">
+          
+          <div class="seat-visual">
+            <span class="small fw-bold">{{ seat.seatNumber }}</span>
+            <div class="seat-head"></div>
+          </div>
+          <span class="fw-bold small mt-1">₹{{ seat.price }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upper Deck -->
+    <div class="col-md-5 bg-white shadow-sm p-4 rounded-4 border">
+      <div class="mb-4 border-bottom pb-2">
+        <span class="fw-bold text-secondary">UPPER DECK</span>
+      </div>
+      <div class="upper-deck-grid">
+        <div *ngFor="let seat of upperDeck" 
+             class="seat-item"
+             [ngClass]="{'selected': isSelected(seat)}"
+             (click)="selectSeat(seat)">
+          
+          <div class="seat-visual">
+            <span class="small fw-bold">{{ seat.seatNumber }}</span>
+            <div class="seat-head"></div>
+          </div>
+          <span class="fw-bold small mt-1">₹{{ seat.price }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Footer -->
+  <div class="footer-summary fixed-bottom bg-white shadow-lg p-3 border-top" *ngIf="selectedSeats.length > 0">
+    <div class="container d-flex justify-content-between align-items-center">
+      <div>
+        <p class="mb-0 text-muted small">Seats Selected: <b class="text-dark">{{ selectedSeats.length }}</b></p>
+        <h4 class="mb-0 text-success fw-bold">Total: ₹{{ totalPrice }}</h4>
+      </div>
+      <button class="btn btn-danger btn-lg px-5 rounded-pill fw-bold shadow-sm" (click)="proceedToBoarding()">
+        Select boarding & dropping points
+      </button>
+    </div>
+  </div>
+</div>

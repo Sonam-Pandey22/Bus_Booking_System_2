@@ -1,0 +1,45 @@
+<div class="container mt-4">
+  <div class="search-summary p-3 bg-light rounded shadow-sm mb-4">
+    <h5 class="mb-0">
+      Buses from <b>{{searchData.from}}</b> to <b>{{searchData.to}}</b> on {{searchData.date}}
+    </h5>
+  </div>
+
+  <div *ngIf="loading" class="text-center my-5">
+    <div class="spinner-border text-primary"></div>
+    <p>Searching for best buses...</p>
+  </div>
+
+  <div *ngIf="!loading && buses.length === 0" class="alert alert-warning text-center">
+    No buses found for this route. Try a different date or city.
+  </div>
+
+  <div class="bus-card card mb-3 shadow-sm border-0" *ngFor="let bus of buses">
+    <div class="card-body p-4">
+      <div class="row align-items-center">
+        <div class="col-md-3">
+          <h5 class="fw-bold text-primary mb-1">{{bus.busName}}</h5>
+          <span class="badge bg-info text-dark">{{bus.busNumber}}</span>
+        </div>
+        <div class="col-md-2 text-center">
+          <div class="h5 mb-0">{{bus.departureTime}}</div>
+          <small class="text-muted">{{bus.fromCity}}</small>
+        </div>
+        <div class="col-md-1 text-center">
+          <i class="bi bi-arrow-right text-muted"></i>
+        </div>
+        <div class="col-md-2 text-center">
+          <div class="h5 mb-0">{{bus.arrivalTime}}</div>
+          <small class="text-muted">{{bus.toCity}}</small>
+        </div>
+        <div class="col-md-2 text-center">
+          <div class="h4 fw-bold text-success">₹{{bus.price}}</div>
+          <small class="text-muted">{{bus.availableSeats}} Seats left</small>
+        </div>
+        <div class="col-md-2 text-end">
+          <button class="btn btn-primary px-4 py-2 rounded-pill">View Seats</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

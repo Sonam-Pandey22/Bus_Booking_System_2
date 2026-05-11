@@ -1,0 +1,84 @@
+<div class="admin-container container mt-5">
+<div class="card shadow-sm mb-5">
+  <div class="text-start mb-3">
+    <span>Total Bus Added = <strong>{{ allBuses.length }}</strong></span>
+  </div>
+    <div class="card-header bg-primary text-white">
+      <h2 class="h4 mb-0">Admin Dashboard - Add  Bus</h2>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="busForm" (ngSubmit)="onSubmit()" class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Bus Name</label>
+          <input type="text" formControlName="busName" placeholder="Enter Bus Name" class="form-control">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">From City</label>
+          <input type="text" formControlName="fromCity" placeholder="Source" class="form-control">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">To City</label>
+          <input type="text" formControlName="toCity" placeholder="Destination" class="form-control">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Journey Date</label>
+          <input type="date" formControlName="journeyDate" class="form-control">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Price (₹)</label>
+          <input type="number" formControlName="price" placeholder="Price" class="form-control">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Total Seats</label>
+          <input type="number" formControlName="availableSeats" placeholder="Seats" class="form-control">
+        </div>
+
+        <div class="col-12 mt-4 text-end">
+          <button type="submit" [disabled]="busForm.invalid" class="btn btn-success px-4">
+            <i class="bi bi-plus-circle"></i> Save Bus
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <hr class="my-5">
+
+  <div class="card shadow-sm">
+    <div class="card-header bg-dark text-white">
+      <h3 class="h5 mb-0">Manage Existing Buses</h3>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover mb-0">
+          <thead class="table-light">
+          <tr>
+            <th>Bus Name</th>
+            <th>Route</th>
+            <th>Date</th>
+            <th>Price</th>
+            <th class="text-center">Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngIf="allBuses.length === 0">
+            <td colspan="5" class="text-center text-muted py-4">No buses found in database.</td>
+          </tr>
+
+          <tr *ngFor="let bus of allBuses">
+            <td class="fw-bold text-primary">{{ bus.busName }}</td>
+            <td>{{ bus.fromCity }} <i class="bi bi-arrow-right mx-1"></i> {{ bus.toCity }}</td>
+            <td>{{ bus.journeyDate }}</td>
+            <td>₹{{ bus.price }}</td>
+            <td class="text-center">
+              <button class="btn btn-outline-danger btn-sm" (click)="onDelete(bus.id)">
+                <i class="bi bi-trash"></i> Delete
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

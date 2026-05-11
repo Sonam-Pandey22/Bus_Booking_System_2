@@ -1,0 +1,244 @@
+<!-- PROFESSIONAL HEADER: Passenger Details with Back Arrow -->
+<div class="header-container bg-white border-bottom sticky-top py-3">
+  <div class="container d-flex align-items-center">
+    <button class="btn btn-link text-dark p-0 me-3 border-0" (click)="goBack()">
+      <i class="bi bi-arrow-left fs-4"></i>
+    </button>
+    <div>
+      <h5 class="fw-bold m-0 text-dark">Passenger Information</h5>
+      <small class="text-muted">
+        {{ bookingDetails?.fromCity }} <i class="bi bi-arrow-right mx-1"></i> {{ bookingDetails?.toCity }}
+      </small>
+    </div>
+  </div>
+</div>
+
+<div class="container py-3 py-lg-5">
+  <div class="row g-4">
+
+    <!-- MOBILE BOOKING SUMMARY -->
+<div class="mobile-summary d-lg-none mb-3">
+
+  <div class="card border-0 shadow-sm rounded-4 p-3">
+
+    <div class="d-flex justify-content-between align-items-center">
+
+      <div>
+        <h6 class="fw-bold mb-1">
+          {{ bookingDetails?.fromCity }}
+          <i class="bi bi-arrow-right mx-1"></i>
+          {{ bookingDetails?.toCity }}
+        </h6>
+
+        <small class="text-muted">
+          {{ bookingDetails?.selectedSeats?.length }} Seats
+        </small>
+      </div>
+
+      <button
+        class="btn btn-outline-dark rounded-pill px-3"
+        (click)="showMobileDetails = !showMobileDetails">
+
+        {{ showMobileDetails ? 'Hide Details' : 'View Details' }}
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+    
+    <!-- LEFT COLUMN (8 Columns): Forms -->
+    <div class="col-12 col-lg-6">
+      
+      <!-- SECTION 1: Contact Details -->
+      <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+        <div class="card-body p-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="fw-bold m-0 text-secondary-emphasis">Contact Details</h5>
+          <button class="btn btn-sm btn-outline-primary rounded-pill px-3" (click)="toggleContactEdit()">
+            {{ isContactEditing ? 'save' : 'edit' }}
+          </button>
+        </div>
+        <p class="text-muted small mb-4">Ticket details will be sent to</p>
+       <form [formGroup]="passengerForm">
+      <!-- VIEW MODE: Jab user pehli baar page par aayega -->
+      <div *ngIf="!isContactEditing" class="contact-view-mode">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="d-flex align-items-center mb-2">
+              <i class="bi bi-envelope me-3 text-muted fs-5"></i>
+              <span class="fw-bold">{{ passengerForm.get('email')?.value }}</span>
+            </div>
+            <div class="d-flex align-items-center">
+              <i class="bi bi-telephone me-3 text-muted fs-5"></i>
+              <span class="fw-bold">+91 {{ passengerForm.get('phone')?.value }}</span>
+            </div>
+          </div>
+         </div>
+        </div>
+          <!-- EDIT MODE: image_f5c6b9.png jaisa Floating UI -->
+      <div *ngIf="isContactEditing" class="contact-edit-mode">
+        <div class="row g-0 border rounded-3 mb-3">
+          <div class="col-4 border-end p-0">
+            <div class="p-2 px-3">
+              <label class="text-muted small d-block">Country Code</label>
+              <span class="fw-bold">+91 (IND) <i class="bi bi-caret-down-fill small ms-1"></i></span>
+            </div>
+          </div>
+          <div class="col-8 p-0">
+            <div class="form-floating h-100">
+              <input type="text" formControlName="phone" class="form-control border-0 fw-bold pt-4 shadow-none" id="phoneInput">
+              <label for="phoneInput" class="text-muted">Phone *</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-floating mb-3 border rounded-3 overflow-hidden">
+          <input type="email" formControlName="email" class="form-control border-0 fw-bold pt-4 shadow-none" id="emailInput">
+          <label for="emailInput" class="text-muted">Email ID</label>
+        </div>
+        </div>
+        <div class="whatsapp-card mt-4 p-3 rounded-3 d-flex justify-content-between align-items-center shadow-sm" style="background-color: #f1faf2;">
+        <div class="d-flex align-items-center">
+          <i class="bi bi-whatsapp text-success fs-3 me-3"></i>
+          <span class="text-dark fw-medium small">Send booking details and trip updates on WhatsApp</span>
+        </div>
+        <div class="form-check form-switch p-0 m-0">
+          <input class="form-check-input custom-red-switch" type="checkbox" role="switch" checked style="width: 50px; height: 25px;">
+        </div>
+      </div>
+    </form>
+  </div>
+  </div>
+        
+
+
+     <!-- SECTION 2: Passenger Information -->
+<div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+  <div class="d-flex align-items-center mb-4">
+    <!-- Section Header Left Icon -->
+    <div class="user-icon-bg me-3">
+      <i class="bi bi-people-fill"></i>
+    </div>
+    <h5 class="fw-bold m-0 text-dark">Passenger Details</h5>
+  </div>
+
+  <form [formGroup]="passengerForm">
+    <div formArrayName="passengers">
+      <div *ngFor="let p of passengers.controls; let i=index" [formGroupName]="i" 
+           class="passenger-container mb-3" [class.active-container]="activeIndex === i">
+        
+        <!-- Accordion Header: Is par click karne se toggle hoga -->
+        <div class="d-flex align-items-center p-3 header-box flex-wrap" (click)="togglePassenger(i)">
+          <!-- Left side User Icon -->
+          <div class="user-icon-circle me-3">
+            <i class="bi bi-person-fill"></i>
+          </div>
+
+          <!-- Passenger Info Text -->
+          <div class="flex-grow-1">
+            <div class="fw-bold text-dark">Passenger {{ i + 1 }}</div>
+            <div class="text-muted small">Seat {{ p.get('seatNumber')?.value }}, Lower Deck</div>
+          </div>
+
+          <!-- Right side Arrow Icon -->
+          <div class="ms-auto text-dark">
+            <i class="bi fs-5" [ngClass]="activeIndex === i ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+          </div>
+        </div>
+
+        <!-- Accordion Body: Sirf active index ke liye dikhega -->
+        <div class="p-3 pt-0" *ngIf="activeIndex === i">
+          <!-- Name Input -->
+          <div class="form-floating black-bold-input mb-3">
+            <input type="text" formControlName="name" class="form-control shadow-none" placeholder="Full Name *">
+            <label>Full Name *</label>
+          </div>
+
+          <!-- Age Input -->
+          <div class="form-floating black-bold-input mb-3">
+            <input type="number" formControlName="age" class="form-control shadow-none" placeholder="Age *">
+            <label>Age *</label>
+          </div>
+
+          <!-- Gender Selection -->
+          <label class="text-muted small mb-2 d-block">Gender *</label>
+          <div class="d-flex gap-3">
+            <div class="gender-box flex-fill">
+              <input type="radio" [id]="'m'+i" value="Male" formControlName="gender" class="btn-check">
+              <label class="btn btn-outline-dark w-100 rounded-pill d-flex align-items-center justify-content-between px-3 py-2 fw-bold" [for]="'m'+i">
+                Male <i class="bi bi-circle"></i>
+              </label>
+            </div>
+            <div class="gender-box flex-fill">
+              <input type="radio" [id]="'f'+i" value="Female" formControlName="gender" class="btn-check">
+              <label class="btn btn-outline-dark w-100 rounded-pill d-flex align-items-center justify-content-between px-3 py-2 fw-bold" [for]="'f'+i">
+                Female <i class="bi bi-circle"></i>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+</div>
+
+    <!-- RIGHT COLUMN (4 Columns): Journey Summary (Sticky) -->
+    <div class="col-lg-6">
+      <div class="card border-0 shadow-sm rounded-4 p-4 sticky-top" style="top: 100px;">
+        <div class="mb-4">
+        <h6 class="fw-bold mb-1">{{ bookingDetails?.busDetails?.busName }}</h6>
+        <p class="text-muted small mb-4">{{ bookingDetails?.selectedSeats?.length }} seats • {{ bookingDetails?.busType }}
+    </p>
+    </div>
+
+        <!-- Dynamic Timeline from Database -->
+        <div class="journey-timeline-container ps-2">
+      
+      <div class="timeline-block pb-4">
+        <div class="timeline-dot"></div>
+        <div class="d-flex justify-content-between">
+          <div class="time-info text-start px-2">
+            <div class="fw-bold">{{ formatTimeTo12Hour(bookingDetails?.boardingPoint?.time) }}</div>
+            <div class="text-muted extra-small">07 May</div>
+          </div>
+        <div class="point-info flex-grow-1 ps-4">
+            <div class="fw-bold text-dark text-uppercase small">{{ bookingDetails?.boardingPoint?.pointName }}</div>
+            <div class="text-muted extra-small">{{ bookingDetails?.boardingPoint?.address }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="duration-info ps-5 py-2">
+        <span class="text-muted small border px-2 py-1 rounded-pill bg-light" style="font-size: 10px;">9h 30m</span>
+      </div>
+
+      <div class="timeline-block pt-4">
+        <div class="timeline-dot"></div>
+        <div class="d-flex justify-content-between">
+          <div class="time-info text-start px-2">
+            <div class="fw-bold">{{ formatTimeTo12Hour(bookingDetails?.droppingPoint?.time) }}</div>
+            <div class="text-muted extra-small">08 May</div>
+          </div>
+          <div class="point-info flex-grow-1 ps-4">
+            <div class="fw-bold text-dark text-uppercase small">{{ bookingDetails?.droppingPoint?.pointName }}</div>
+            <div class="text-muted extra-small">{{ bookingDetails?.droppingPoint?.address }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="my-4 ">
+
+    <h6 class="fw-bold small text-dark mb-2">Seat details</h6>
+    <div class="d-flex flex-wrap gap-2">
+      <span *ngFor="let seat of bookingDetails?.selectedSeats" class="seat-tag">
+        {{ seat }}
+      </span>
+    </div>
+
+  </div>
+</div>
